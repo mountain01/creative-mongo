@@ -4,24 +4,24 @@
     <!--name-->
     <div class="form-group">
       <label for="">Name</label>
-      <input type="text" class="form-control" placeholder="Fireball" ng-model="newSpell.name">
+      <input type="text" class="form-control" placeholder="Fireball" ng-model="newSpell.name" required>
     </div>
     <!--casting time-->
     <div class="form-row">
       <div class="form-group col">
         <label for="">Casting Time</label>
-        <input type="text" class="form-control" placeholder="1 action" ng-model="newSpell.castingTime">
+        <input type="text" class="form-control" placeholder="1 action" ng-model="newSpell.castingTime" required>
       </div>
       <!--range-->
       <div class="form-group col">
         <label for="">Range</label>
-        <input type="text" class="form-control" placeholder="150 feet" ng-model="newSpell.range">
+        <input type="text" class="form-control" placeholder="150 feet" ng-model="newSpell.range" required>
       </div>
     </div>
     <div class="form-row">
       <div class="form-group col">
         <label for="">Duration</label>
-        <input type="text" class="form-control" placeholder="Instantaneous" ng-model="newSpell.duration">
+        <input type="text" class="form-control" placeholder="Instantaneous" ng-model="newSpell.duration" required>
       </div>
       <div class="form-group col">
         <div class="form-row">
@@ -47,7 +47,7 @@
     <div class="form-row">
       <div class="form-group col">
         <label for="">Level</label>
-        <select name="" id="" class="form-control" ng-model="newSpell.level">
+        <select name="" id="" class="form-control" ng-model="newSpell.level" required>
               <option value="Cantrip">Cantrip</option>
               <option value="1">1</option>
               <option value="2">2</option>
@@ -62,7 +62,7 @@
       </div>
       <div class="form-group col">
         <label for="">School</label>
-        <input type="text" class="form-control" placeholder="evocation" ng-model="newSpell.school">
+        <input type="text" class="form-control" placeholder="evocation" ng-model="newSpell.school" required>
       </div>
     </div>
     <div class="form-group">

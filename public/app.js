@@ -40,7 +40,8 @@ class MainCtrl {
 
     this.gridOptions = {
       columnDefs: columnDefs,
-      rowData: null
+      rowData: null,
+      enableSorting: true
     };
 
     this.spellService.getSpells().then(res => this.gridOptions.api.setRowData(res));
