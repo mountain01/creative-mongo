@@ -9,10 +9,12 @@
     <link rel="stylesheet" href="bootstrap/bootstrap.min.css" type="text/css" />
     <link rel="stylesheet" href="main.css" type="text/css" />
     <script src="angular/angular.min.js"></script>
+    <script src="angular/angular-ui-router.min.js"></script>
+    <script src="grid/ag-grid-community.min.js"></script>
     <script src="app.js"></script>
   </head>
 
-  <body ng-controller="MainCtrl as $ctrl">
+  <body>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <a class="navbar-brand" href="#">D&D Spell List</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,90 +22,13 @@
   </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav">
-          <a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
-          <a class="nav-item nav-link" href="#">Add</a>
+          <a class="nav-item nav-link active" ui-sref="home" ui-sref-active="active">Home <span class="sr-only">(current)</span></a>
+          <a class="nav-item nav-link" ui-sref="add" ui-sref-active="active">Add</a>
         </div>
       </div>
     </nav>
 
-    <div class="container">
-
-      <form ng-submit="$ctrl.submitSpell(newSpell)">
-        <!--name-->
-        <div class="form-group">
-          <label for="">Name</label>
-          <input type="text" class="form-control" placeholder="Fireball" ng-model="newSpell.name">
-        </div>
-        <!--casting time-->
-        <div class="form-row">
-          <div class="form-group col">
-            <label for="">Casting Time</label>
-            <input type="text" class="form-control" placeholder="1 action" ng-model="newSpell.castingTime">
-          </div>
-          <!--range-->
-          <div class="form-group col">
-            <label for="">Range</label>
-            <input type="text" class="form-control" placeholder="150 feet" ng-model="newSpell.range">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col">
-            <label for="">Duration</label>
-            <input type="text" class="form-control" placeholder="Instantaneous" ng-model="newSpell.duration">
-          </div>
-          <div class="form-group col">
-            <div class="form-row">
-              <div class="form-group col">
-                <label for="">Components</label><br>
-                <div class="form-check form-check-inline">
-                  <input type="checkbox" class="form-check-input" ng-model="newSpell.components.verbal">
-                  <label for="" class="form-check-label">Verbal</label>
-                </div>
-                <div class="form-check form-check-inline">
-                  <input type="checkbox" class="form-check-input" ng-model="newSpell.components.semantic">
-                  <label for="" class="form-check-label">Semantic</label>
-                </div>
-                <div class="form-check form-check-inline col">
-                  <input type="checkbox" class="form-check-input" ng-model="newSpell.components.material">
-                  <label for="" class="form-check-label mr-3">Material</label>
-                  <input ng-disabled="!newSpell.components.material" type="text" class="form-control" placeholder="a tiny ball of bat guano and sulfer" ng-model="newSpell.materialComponents">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col">
-            <label for="">Level</label>
-            <select name="" id="" class="form-control" ng-model="newSpell.level">
-              <option value="Cantrip">Cantrip</option>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-            </select>
-          </div>
-          <div class="form-group col">
-            <label for="">School</label>
-            <input type="text" class="form-control" placeholder="evocation" ng-model="newSpell.school">
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="">Description</label>
-          <textarea name="" id="" cols="30" rows="10" class="form-control" placeholder="A bright streak flashes..." ng-model="newSpell.description"></textarea>
-        </div>
-        <div class="form-check"><input type="checkbox" class="form-check-input" ng-model="higherLevels"><label for="" class="form-check-label">Higher Levels</label></div>
-        <div class="form-group" ng-if="higherLevels"><textarea name="" id="" cols="30" rows="10" placeholder="When you cast this spell using a spell slot..." class="form-control" ng-model="newSpell.higherLevels"></textarea></div>
-        <button class="btn" type="submit">Submit Spell</button>
-      </form>
-
-      <pre>{{newSpell|json}}</pre>
-    </div>
+    <ui-view></ui-view>
 
 
   </body>

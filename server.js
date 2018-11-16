@@ -17,7 +17,9 @@ app.use('/spells', SpellRoute);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/angular', express.static(path.join(__dirname, 'node_modules/angular')));
+app.use('/angular', express.static(path.join(__dirname, 'node_modules/angular-ui-router/release')));
 app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
+app.use('/grid', express.static(path.join(__dirname, 'node_modules/ag-grid-community/dist')))
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
