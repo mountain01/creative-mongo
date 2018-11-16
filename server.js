@@ -9,9 +9,11 @@ db.once('open', () => {
 });
 
 const CommentRoute = require('./routes/comment');
+const SpellRoute = require('./routes/spell.route');
 
 app.use(express.json());
 app.use('/comments', CommentRoute);
+app.use('/spells', SpellRoute);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/angular', express.static(path.join(__dirname, 'node_modules/angular')));
