@@ -10,8 +10,9 @@ app.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $ur
 }])
 
 class MainCtrl {
-  constructor(SpellService) {
+  constructor(SpellService, $q) {
     this.title = 'temp';
+    this.$q = $q;
     this.spellService = SpellService;
   }
   $onInit() {
@@ -21,15 +22,32 @@ class MainCtrl {
     //   { headerName: "Price", field: "price" }
     // ];
 
-    const columnDefs = [
-      { headerName: 'Name', field: "name" },
-      { headerName: 'Casting Time', field: "castingTime" },
-      { headerName: 'Range', field: "range" },
-      { headerName: 'Duration', field: "duration" },
-      { headerName: 'Level', field: "level" },
-      { headerName: 'School', field: "school" },
-      { headerName: 'Description', field: "description" },
-      { headerName: 'Higher Levels', field: "higherLevels" },
+    const levels = ['Cantrip'];
+    for (let i = 1; i < 10; i++) {
+      levels.push(i);
+    }
+
+    const columnDefs = [{
+        headerName: 'Name',
+        field: "name",
+        editable: true,
+        checkboxSelection: true
+      },
+      { editable: true, headerName: 'Casting Time', field: "castingTime" },
+      { editable: true, headerName: 'Range', field: "range" },
+      { editable: true, headerName: 'Duration', field: "duration" },
+      {
+        headerName: 'Level',
+        field: "level",
+        // editable: true,
+        cellEditor: 'agRichSelectCellEditor',
+        cellEditorParams: {
+          values: levels,
+        }
+      },
+      { editable: true, headerName: 'School', field: "school" },
+      // { editable: true, headerName: 'Description', field: "description" },
+      // { editable: true, headerName: 'Higher Levels', field: "higherLevels" },
     ]
 
     // const rowData = [
@@ -41,10 +59,38 @@ class MainCtrl {
     this.gridOptions = {
       columnDefs: columnDefs,
       rowData: null,
-      enableSorting: true
+      enableSorting: true,
+      rowSelection: 'multiple',
+      onCellValueChanged: ({ data }) => {
+        this.spellService.updateSpell(data).then(console.log);
+      },
+      onGridReady: function(params) {
+        params.api.sizeColumnsToFit();
+
+        window.addEventListener('resize', function() {
+          setTimeout(function() {
+            params.api.sizeColumnsToFit();
+          })
+        })
+      }
     };
 
     this.spellService.getSpells().then(res => this.gridOptions.api.setRowData(res));
+  }
+
+  canDelete() {
+    return this.gridOptions.api.getSelectedRows().length > 0;
+  }
+
+  deleteSpell() {
+    const toDelete = this.gridOptions.api.getSelectedRows();
+    const deleteList = toDelete.map(a => this.spellService.deleteSpell(a))
+    this.$q.all(deleteList).then(() => {
+      const transaction = {
+        remove: toDelete
+      }
+      this.gridOptions.api.updateRowData(transaction);
+    });
   }
 
 
@@ -74,7 +120,7 @@ class AddCtrl {
 
 }
 
-MainCtrl.$inject = ['SpellService'];
+MainCtrl.$inject = ['SpellService', '$q'];
 AddCtrl.$inject = ['SpellService', '$scope'];
 
 app.controller('AddCtrl', AddCtrl);
@@ -93,6 +139,14 @@ class SpellService {
 
   saveSpell(spell) {
     return this.http.post('/spells', spell).then(res => res.data);
+  }
+
+  updateSpell(spell) {
+    return this.http.put(`/spells/${spell._id}`, spell).then(res => res.data);
+  }
+
+  deleteSpell(spell) {
+    return this.http.delete(`/spells/${spell._id}`).then(res => res.data);
   }
 }
 
