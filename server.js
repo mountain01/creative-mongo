@@ -15,6 +15,7 @@ app.use('/comments', CommentRoute);
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/angular', express.static(path.join(__dirname, 'node_modules/angular')));
+app.use('/bootstrap', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
